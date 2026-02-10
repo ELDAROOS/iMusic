@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iMusic | Web Player</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo">Music</div>
+            <nav>
+                <div class="nav-section">Медиатека</div>
+                <div class="nav-item active" id="btn-all" onclick="loadSongs()">
+                    <span class="icon">🏠</span> Все песни
+                </div>
+                <div class="nav-item" id="btn-albums" onclick="loadAlbums()">
+                    <span class="icon">💿</span> Альбомы
+                </div>
+                <div class="nav-item" id="btn-artists" onclick="loadArtists()">
+                    <span class="icon">👤</span> Артисты
+                </div>
+                <div class="nav-item" id="btn-favorites" onclick="loadFavorites()">
+                    <span class="icon">★</span> Любимые
+                </div>
+                
+                <div class="nav-section">Настройки</div>
+                <div class="nav-item sync-btn" onclick="importLocalMusic()">
+                    <span class="icon">🔄</span> Обновить папку
+                </div>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div class="top-bar">
+                <header id="content-header" class="content-header">
+                    <h1>Все песни</h1>
+                </header>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Поиск в медиатеке..." oninput="handleSearch(this.value)">
+                    <button id="clear-search" onclick="clearSearch()" style="display: none;">✕</button>
+                </div>
+            </div>
+            
+            <div id="main-view" class="grid-view">
+                <div class="loader">Выберите папку с музыкой в боковом меню...</div>
+            </div>
+        </main>
+
+        <footer class="player">
+            <div class="now-playing">
+                <div id="player-art" class="album-art-mini">
+                    <img src="default-cover.png" id="cur-art-img" alt="">
+                </div>
+                <div class="info">
+                    <div id="cur-title" class="truncate">Не выбрано</div>
+                    <div id="cur-artist" class="truncate">Исполнитель</div>
+                </div>
+            </div>
+
+            <div class="audio-controls">
+                <audio id="audio-element" controls style="width: 100%; max-width: 500px;"></audio>
+            </div>
+
+            <div class="player-extra">
+                <button id="show-lyrics-btn" onclick="toggleLyrics()" title="Показать текст">💬 Текст</button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="lyrics-overlay" class="lyrics-modal">
+        <div class="lyrics-content">
+            <button class="close-lyrics" onclick="toggleLyrics()">✕</button>
+            <h2 id="lyrics-title">Название песни</h2>
+            <p id="lyrics-artist">Исполнитель</p>
+            <hr>
+            <div id="lyrics-container">Выберите песню, чтобы увидеть текст...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
